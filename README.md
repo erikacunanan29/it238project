@@ -16,8 +16,16 @@ Collision Detection Available:
 
 Other Functionalities Available:
         - Renders the scores of each of the available players.
-        - Tanks will respawn after 5 seconds of being hit.        - 
+        - Tanks will respawn after 5 seconds of being hit. 
+	- Random map generator, get random map from the Maps directory	
+	- Game will end when all players are in state = False, if only one tank is active game ends
+	- Game over screen will show the winner
         
-MISSING COLLISION DETECTION:
-        - Tanks collide with each other.
+OTHER COLLISION DETECTION:
+        - Tanks collide with each other.(missing)
         - Tanks collide with map elements.
+	- Bullets collide with map elements(brick/steel).
+
+How To Run
+	- python3 main.py
+
