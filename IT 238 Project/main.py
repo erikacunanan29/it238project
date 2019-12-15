@@ -155,14 +155,6 @@ def Collision(curx, cury):
 		element = "Grass"
 	return element
 
-if len(sys.argv) != 3 or len(sys.argv) != 0:
-	print('-----------------------------------------')
-	print('number of args is invalid. the following are valid commands:')
-	print('"python3 main.py <name>" - creates a game lobby where peers can connect')
-	print('"python3 main.py <name> <server_addr> <server_port>" - a peer connects to the given lobby')
-	print('\tanyone can connect to a peer as long as it is also connected to a lobby')
-	print('\tanyone can freely quit as soon as the game starts')
-	sys.exit(2)
 
 init_map = False
 mapElements = []
@@ -180,6 +172,15 @@ try:
 	peer.connect((addr, int(port)))
 
 except IndexError as e:
+	if len(sys.argv) != 2:
+		print('-----------------------------------------')
+		print('number of args is invalid. the following are valid commands:')
+		print('"python3 main.py <name>" - creates a game lobby where peers can connect')
+		print('"python3 main.py <name> <server_addr> <server_port>" - a peer connects to the given lobby')
+		print('\tanyone can connect to a peer as long as it is also connected to a lobby')
+		print('\tanyone can freely quit as soon as the game starts')
+		sys.exit(2)
+
 	print('no server inputted, creating server.. ')
 	# init map
 	cmd=''
