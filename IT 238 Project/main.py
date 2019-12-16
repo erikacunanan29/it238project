@@ -100,9 +100,10 @@ def redrawGameWindow():
 		if player.state:
 			player.drawObject(window)
 		#commented out respawn to test game over
-		#if player.enemyHit:
-		#	t = Timer(5, player.respawn)
-		#	t.start()
+		if player.enemyHit:
+			t = Timer(5, player.respawn)
+			t.start()
+
 
 	for bullet in game.bullets:
 		bullet.drawObject(window)
@@ -237,8 +238,8 @@ while run:
 					# remove your tank from other players
 					packet = PacketBuilder.pack(PacketType.TANK_RMV, [game.name])
 					peer.broadcast(packet)
-					# update the score of the one that hit you
-					packet = PacketBuilder.pack(PacketType.SCORE_UPDT, [game.name])
+					# update the score of the one that hit a tank
+					packet = PacketBuilder.pack(PacketType.SCORE_UPDT, [bullet.player])
 					peer.broadcast(packet)
 
 					game.bullets.pop(game.bullets.index(bullet))
@@ -249,19 +250,22 @@ while run:
 					#player.state = False #set the state of the Player to inactive since it has been hit
 					#print('player removed')
 
+
 		#Checks if bullet hit an element
 		for i in range(0, len(mapElements)):
 			if mapElements[i].element == '#':
 				if bullet.y < mapElements[i].hitbox[1] + mapElements[i].hitbox[3] and bullet.y > mapElements[i].hitbox[1]:
 					if bullet.x > mapElements[i].hitbox[0] and bullet.x < mapElements[i].hitbox[0] + mapElements[i].hitbox[2]:
 						game.bullets.pop(game.bullets.index(bullet))
-						mapElements[i].element = '.'
+						#mapElements[i].element = '.'
+						mapElements.pop(i)
 						print("bullet hit a brick")
+						break
 			elif mapElements[i].element == '@':
 				if bullet.y < mapElements[i].hitbox[1] + mapElements[i].hitbox[3] and bullet.y > mapElements[i].hitbox[1]:
 					if bullet.x > mapElements[i].hitbox[0] and bullet.x < mapElements[i].hitbox[0] + mapElements[i].hitbox[2]:
 						game.bullets.pop(game.bullets.index(bullet))
-						mapElements[i].element = '.'
+						# mapElements[i].element = '.'
 						print("bullet hit steel")
 			else:
 				continue
